@@ -1,4 +1,4 @@
-## Tool for collect all images from helm manifest
+## Tool for collecting all images from helm manifest
 ###
 Usage:
 ```bash
