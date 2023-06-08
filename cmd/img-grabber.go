@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"img-grubber/internal/argparser"
+	"img-grubber/internal/logic"
+	"img-grubber/internal/reader"
 	"os"
 )
 
@@ -9,25 +12,17 @@ func main() {
 
 	stat, _ := os.Stdin.Stat()
 	if (stat.Mode() & os.ModeCharDevice) == 0 {
-		argparser.StdioConsumer()
+		// we run in pipeline, but parse arguments anyway
+		fmt.Print(argparser.ArgParser(true))
 	} else {
-		argparser.ArgParser()
+		// we run as a standalone application and don't wait anything from stdio
+		fmt.Print(argparser.ArgParser(false))
 	}
-	/*
-		scanner := bufio.NewScanner(os.Stdin)
-		writer := bufio.NewWriter(os.Stdout)
-		img := *counter.NewImg()
 
-		for scanner.Scan() {
-			input := scanner.Text()
-			err, key, value := counter.Parse(input)
-			if err == nil {
-				img[key] = value
-			}
-		}
-		writer.Flush()
-		for key, _ := range img {
-			fmt.Printf("%v\n", key)
-		}
-	*/
+	//storage for manifest
+	arr := reader.InitNewData()
+	arr.StdioRead()
+	//find images and normalize the list
+	logic.ImageCounter(arr)
+
 }
