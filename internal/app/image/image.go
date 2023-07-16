@@ -16,13 +16,16 @@ func New(m []string) *Image {
 	}
 }
 
-func (img *Image) Count() (response map[string]bool) {
-	response = make(map[string]bool, 10)
+func (img *Image) Count() (response []string) {
+	images := make(map[string]bool, 10)
 	for i := 0; i < len(img.manifest); i++ {
 		key, err := findImage(img.manifest[i])
 		if err == nil {
-			response[key] = true
+			images[key] = true
 		}
+	}
+	for key := range images {
+		response = append(response, key)
 	}
 	return response
 }
