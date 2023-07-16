@@ -8,14 +8,16 @@ import (
 type Argument struct {
 	Filename string
 	Mode     string
+	Sort     string
 	Pipe     bool
 }
 
 func New() (response *Argument) {
 	response = &Argument{}
 	var help = flag.Bool("help", false, "Show help")
-	flag.StringVar(&response.Mode, "mode", "images", "[images|stats]")
+	flag.StringVar(&response.Mode, "mode", "images", "<images|stat>")
 	flag.StringVar(&response.Filename, "file", "", "<manifest filename>")
+	flag.StringVar(&response.Sort, "sort", "", "<asc|desc>")
 
 	flag.Parse()
 
