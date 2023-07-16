@@ -26,7 +26,7 @@ func (a *App) Run() error {
 		return err
 	}
 	switch a.args.Mode {
-	case "images":
+	case "image":
 		m := image.New(ma.Manifest)
 		images := m.Count()
 		switch a.args.Sort {

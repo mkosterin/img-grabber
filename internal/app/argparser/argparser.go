@@ -15,7 +15,7 @@ type Argument struct {
 func New() (response *Argument) {
 	response = &Argument{}
 	var help = flag.Bool("help", false, "Show help")
-	flag.StringVar(&response.Mode, "mode", "images", "<images|stat>")
+	flag.StringVar(&response.Mode, "mode", "image", "<image|stat>")
 	flag.StringVar(&response.Filename, "file", "", "<manifest filename>")
 	flag.StringVar(&response.Sort, "sort", "", "<asc|desc>")
 
