@@ -6,7 +6,9 @@ import (
 	"img-grabber/internal/app/image"
 	"img-grabber/internal/app/manifest"
 	stat "img-grabber/internal/app/stats"
+	"os"
 	"sort"
+	"text/tabwriter"
 )
 
 type App struct {
@@ -41,8 +43,17 @@ func (a *App) Run() error {
 	case "stat":
 		s := stat.New(ma.Manifest)
 		k, m := s.ObjectCounter()
+
+		w := new(tabwriter.Writer)
+		// minwidth, tabwidth, padding, padchar, flags
+		w.Init(os.Stdout, 8, 8, 0, '\t', 0)
+		defer w.Flush()
+
+		fmt.Fprintf(w, "\n %s\t%s\t", "Object", "Count")
+		fmt.Fprintf(w, "\n %s\t%s\t", "------", "-----")
 		for _, key := range k {
-			fmt.Printf("%s - %d\n", key, m[key])
+			fmt.Fprintf(w, "\n %s\t%d\t", key, m[key])
+			//fmt.Printf("%s - %d\n", key, m[key])
 		}
 	}
 
