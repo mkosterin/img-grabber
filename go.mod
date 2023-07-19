@@ -1,3 +1,3 @@
-module img-grubber
+module img-grabber
 
 go 1.20

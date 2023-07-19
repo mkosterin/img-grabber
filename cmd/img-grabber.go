@@ -1,26 +1,32 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"img-grubber/internal/counter"
+	"img-grabber/internal/pkg/app"
+	"log"
 	"os"
+	"time"
 )
 
 func main() {
-	scanner := bufio.NewScanner(os.Stdin)
-	writer := bufio.NewWriter(os.Stdout)
-	img := *counter.NewImg()
 
-	for scanner.Scan() {
-		input := scanner.Text()
-		err, key, value := counter.Parse(input)
-		if err == nil {
-			img[key] = value
-		}
+	result := make(chan bool, 1)
+
+	go job(result)
+
+	select {
+	case <-result:
+		os.Exit(0)
+	case <-time.After(10 * time.Second):
+		log.Println("Timeout has been reached")
 	}
-	writer.Flush()
-	for key, _ := range img {
-		fmt.Printf("%v\n", key)
+
+}
+
+func job(result chan<- bool) {
+	a := app.New()
+	err := a.Run()
+	if err != nil {
+		log.Fatal(err)
 	}
+	result <- true
 }
