@@ -9,3 +9,17 @@ or
 helm template <release-name> <chart-name> | ./img-grabber
 ```
 
+or
+```bash
+img-grabber -file <manifest_file_name.yaml> -sort <asc|desc>
+```
+
+or
+```bash
+img-grabber -file <manifest_file_name.yaml> -mode stat
+```
+
+All possible keys:
+```bash
+img-grabber -h
+```
