@@ -17,7 +17,7 @@ func New(m []string) *Image {
 }
 
 func (img *Image) Count() (response []string) {
-	images := make(map[string]bool, 10)
+	images := make(map[string]bool, 1)
 	for i := 0; i < len(img.manifest); i++ {
 		key, err := findImage(img.manifest[i])
 		if err == nil {
@@ -33,7 +33,8 @@ func (img *Image) Count() (response []string) {
 func findImage(str string) (string, error) {
 	matched, _ := regexp.MatchString(`(?m)\b(image):\s*([^\s]+)`, str)
 	if matched {
-		step1 := strings.ReplaceAll(strings.TrimSpace(str), "image: ", "")
+		step0 := strings.Replace(strings.TrimSpace(str), "- ", "", 1)
+		step1 := strings.ReplaceAll(strings.TrimSpace(step0), "image: ", "")
 		step2 := strings.ReplaceAll(strings.TrimSpace(step1), "\"", "")
 		return step2, nil
 	}

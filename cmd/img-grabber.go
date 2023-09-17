@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-
+	// 10 seconds timeout to exit from app
 	result := make(chan bool, 1)
 
 	go job(result)

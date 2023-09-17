@@ -40,8 +40,6 @@ func findKind(str string) (string, error) {
 	if matched {
 		index := strings.Index(str, substr)
 		step1 := str[index+len(substr):]
-		//step1 := strings.ReplaceAll(strings.TrimSpace(str), "image: ", "")
-		//step2 := strings.ReplaceAll(strings.TrimSpace(step1), "\"", "")
 		return step1, nil
 	}
 	return "", errors.New("not Kind string")
