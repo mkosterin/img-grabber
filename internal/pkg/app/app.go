@@ -22,14 +22,14 @@ func New() *App {
 }
 
 func (a *App) Run() error {
-	ma := manifest.New(a.args.Filename)
-	err := ma.Read()
+	mnfst := manifest.New(a.args.Filename)
+	err := mnfst.Read() //if no manifest we will exit by timeout upper
 	if err != nil {
 		return err
 	}
 	switch a.args.Mode {
 	case "image":
-		m := image.New(ma.Manifest)
+		m := image.New(mnfst.Manifest)
 		images := m.Count()
 		switch a.args.Sort {
 		case "asc":
@@ -41,11 +41,10 @@ func (a *App) Run() error {
 			fmt.Println(images[i])
 		}
 	case "stat":
-		s := stat.New(ma.Manifest)
+		s := stat.New(mnfst.Manifest)
 		k, m := s.ObjectCounter()
 
 		w := new(tabwriter.Writer)
-		// minwidth, tabwidth, padding, padchar, flags
 		w.Init(os.Stdout, 8, 8, 0, '\t', 0)
 		defer w.Flush()
 
@@ -53,8 +52,8 @@ func (a *App) Run() error {
 		fmt.Fprintf(w, "\n %s\t%s\t", "------", "-----")
 		for _, key := range k {
 			fmt.Fprintf(w, "\n %s\t%d\t", key, m[key])
-			//fmt.Printf("%s - %d\n", key, m[key])
 		}
+
 	}
 
 	return nil

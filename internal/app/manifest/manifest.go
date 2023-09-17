@@ -13,7 +13,7 @@ type Manifest struct {
 
 func New(fileName string) *Manifest {
 	return &Manifest{
-		Manifest: make([]string, 10),
+		Manifest: make([]string, 0),
 		fileName: fileName,
 	}
 }
