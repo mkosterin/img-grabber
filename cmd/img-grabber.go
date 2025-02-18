@@ -16,7 +16,7 @@ func main() {
 	select {
 	case <-result:
 		os.Exit(0)
-	case <-time.After(20 * time.Second):
+	case <-time.After(45 * time.Second):
 		log.Println("Timeout has been reached")
 	}
 
