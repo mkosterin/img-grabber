@@ -36,6 +36,18 @@ func findImage(str string) (string, error) {
 		step0 := strings.Replace(strings.TrimSpace(str), "- ", "", 1)
 		step1 := strings.ReplaceAll(strings.TrimSpace(step0), "image: ", "")
 		step2 := strings.ReplaceAll(strings.TrimSpace(step1), "\"", "")
+		if strings.Contains(step2, "{") {
+			return "", errors.New("image string contains invalid character '{'")
+		}
+		if strings.Contains(step2, "}") {
+			return "", errors.New("image string contains invalid character '}'")
+		}
+		if strings.Contains(step2, "<") {
+			return "", errors.New("image string contains invalid character '<'")
+		}
+		if strings.Contains(step2, ">") {
+			return "", errors.New("image string contains invalid character '>'")
+		}
 		return step2, nil
 	}
 	return "", errors.New("not image string")
